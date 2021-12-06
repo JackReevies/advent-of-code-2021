@@ -77,31 +77,34 @@ fn part2() {
         fish2.push((0, fish[x]));
     }
 
-    let mut fish_to_process = fish2.clone();
     let mut total_fish = fish2.len();
+
+    let mut fish_in_fish_out: Vec<(i32, i32)> = fish2.clone();
 
     loop {
         // println!("Fishes are {:?}", fish_to_process);
-        let mut new_fish: Vec<(i32, i32)> = Vec::new();
-        for x in 0..fish_to_process.len() {
-            let fi = fish_to_process[x];
+        let x = 0;
+        while x < fish_in_fish_out.len() {
+            let fi = fish_in_fish_out[x];
             let spawned: Vec<(i32, i32)> = get_spawned_in_lifetime(fi, day);
 
             for x in 0..spawned.len() {
-                new_fish.push(spawned[x])
+                fish_in_fish_out.push(spawned[x]);
+                total_fish += 1;
             }
 
+            fish_in_fish_out.splice(x..x + 1, []);
+
+            if total_fish % 10000 == 0 {
+                println!("Total fish: {}", total_fish)
+            }
             //println!("{} spawned {} fish", x, spawned.len())
         }
 
-        fish_to_process = new_fish.clone();
-        total_fish += new_fish.len();
-        new_fish.clear();
-
-        if fish_to_process.len() == 0 {
+        if fish_in_fish_out.len() == 0 {
             break;
         }
-        println!("Total fish: {}", total_fish)
+        
     }
 
     println!("there were a total of {} fish", total_fish);
