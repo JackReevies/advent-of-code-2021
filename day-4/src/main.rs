@@ -1,8 +1,11 @@
 use std::fs;
+use std::time::{Instant};
 
 fn main() {
+    let now = Instant::now();
     part1();
     part2();
+    println!("{}", now.elapsed().as_millis());
 }
 
 fn part1() {
@@ -10,9 +13,9 @@ fn part1() {
         fs::read_to_string("./input.txt").expect("Something went wrong reading the file");
     let lines: Vec<&str> = contents.split("\r\n").collect();
 
-    let draws: Vec<i32> = lines[0]
+    let draws: Vec<i8> = lines[0]
         .split(',')
-        .map(|x| x.parse::<i32>().unwrap())
+        .map(|x| x.parse::<i8>().unwrap())
         .collect();
 
     let mut boards = create_boards(lines);
@@ -37,9 +40,9 @@ fn part2() {
         fs::read_to_string("./input.txt").expect("Something went wrong reading the file");
     let lines: Vec<&str> = contents.split("\r\n").collect();
 
-    let draws: Vec<i32> = lines[0]
+    let draws: Vec<i8> = lines[0]
         .split(',')
-        .map(|x| x.parse::<i32>().unwrap())
+        .map(|x| x.parse::<i8>().unwrap())
         .collect();
 
     let mut boards = create_boards(lines);
@@ -60,9 +63,9 @@ fn part2() {
     }
 }
 
-fn create_boards(lines: Vec<&str>) -> Vec<Vec<i32>> {
-    let mut boards: Vec<Vec<i32>> = Vec::new();
-    let mut board: Vec<i32> = Vec::new();
+fn create_boards(lines: Vec<&str>) -> Vec<Vec<i8>> {
+    let mut boards: Vec<Vec<i8>> = Vec::new();
+    let mut board: Vec<i8> = Vec::new();
     let mut i: i32 = 0;
     for line in lines {
         i += 1;
@@ -83,7 +86,7 @@ fn create_boards(lines: Vec<&str>) -> Vec<Vec<i32>> {
         }
 
         for number in row {
-            board.push(number.parse::<i32>().unwrap())
+            board.push(number.parse::<i8>().unwrap())
         }
     }
 
@@ -91,7 +94,7 @@ fn create_boards(lines: Vec<&str>) -> Vec<Vec<i32>> {
     return boards;
 }
 
-fn eliminate_matches(mut boards: Vec<Vec<i32>>, number: i32) -> Vec<Vec<i32>> {
+fn eliminate_matches(mut boards: Vec<Vec<i8>>, number: i8) -> Vec<Vec<i8>> {
     let mut i = 0;
     while i < boards.len() {
         let mut x = 0;
@@ -106,7 +109,7 @@ fn eliminate_matches(mut boards: Vec<Vec<i32>>, number: i32) -> Vec<Vec<i32>> {
     return boards;
 }
 
-fn check_for_winner(boards: &Vec<Vec<i32>>) -> i32 {
+fn check_for_winner(boards: &Vec<Vec<i8>>) -> i8 {
     let mut i = 0;
     while i < boards.len() {
         if check_board(&boards[i]) {
@@ -117,7 +120,7 @@ fn check_for_winner(boards: &Vec<Vec<i32>>) -> i32 {
     return -1;
 }
 
-fn check_board(board: &Vec<i32>) -> bool {
+fn check_board(board: &Vec<i8>) -> bool {
     let mut row = 0;
     while row < 5 {
         let mut row_win = true;
@@ -156,26 +159,26 @@ fn check_board(board: &Vec<i32>) -> bool {
     return false;
 }
 
-fn calculate_score(board: &Vec<i32>, winning_draw: i32) -> i32 {
+fn calculate_score(board: &Vec<i8>, winning_draw: i8) -> i32 {
     let mut x = 0;
-    let mut sum = 0;
+    let mut sum: i32 = 0;
     while x < board.len() {
         if board[x] != -1 {
-            sum += board[x];
+            sum = sum + board[x] as i32;
         }
         x += 1;
     }
-    return sum * winning_draw;
+    return sum * winning_draw as i32;
 }
 
-fn print_vec(vec: Vec<i32>) {
+fn print_vec(vec: Vec<i8>) {
     for x in vec {
         print!("{},", x);
     }
     println!("");
 }
 
-fn print_vec_vec(vec: Vec<Vec<i32>>) {
+fn print_vec_vec(vec: Vec<Vec<i8>>) {
     for x in vec {
         for i in x {
             print!("{},", i);

@@ -1,8 +1,11 @@
 use std::fs;
+use std::time::{Instant};
 
 fn main() {
+  let now = Instant::now();
   //part1();
   part2();
+  println!("{}", now.elapsed().as_millis());
 }
 
 fn part1() {
@@ -74,8 +77,8 @@ fn part2() {
       oxygen_vec = prune_vec(oxygen_vec, i, '0');
     }
     
-    println!("printing oxygen_vec after iteration {}", i + 1);
-    print_vec(oxygen_vec.to_vec());
+    // println!("printing oxygen_vec after iteration {}", i + 1);
+    // print_vec(oxygen_vec.to_vec());
 
     if oxygen_vec.len() == 1 {
       break;
@@ -105,8 +108,8 @@ fn part2() {
       co2_vec = prune_vec(co2_vec, i, '1');
     }
     
-    println!("printing co2_vec after iteration {}", i + 1);
-    print_vec(co2_vec.to_vec());
+    // println!("printing co2_vec after iteration {}", i + 1);
+    // print_vec(co2_vec.to_vec());
 
     if co2_vec.len() == 1 {
       break;
@@ -131,10 +134,4 @@ fn prune_vec(vec: Vec<&str>, pos: i32, bit_value: char) -> Vec<&str> {
     }
   }
   return valid_bins;
-}
-
-fn print_vec(vec: Vec<&str>){
-  for x in vec {
-    println!("{}", x)
-  }
 }
