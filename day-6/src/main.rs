@@ -71,7 +71,7 @@ fn part2() {
 
     let mut fish2: Vec<(i32, i32)> = Vec::new();
 
-    let day = 256;
+    let day = 80;
 
     for x in 0..fish.len() {
         fish2.push((0, fish[x]));
