@@ -13,7 +13,7 @@ async function start() {
 
   const task1 = await timeFunction(() => partOne(numbers))
   const task2 = await timeFunction(() => partTwo(numbers))
-  return [{ ans: task1.result.total, ms: task1.ms }, { ans: task2.result.total, ms: task2.ms }]
+  console.log(JSON.stringify([{ ans: task1.result, ms: task1.ms }, { ans: task2.result, ms: task2.ms }]))
 }
 
 module.exports = start

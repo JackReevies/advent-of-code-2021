@@ -70,7 +70,7 @@ async function start() {
   const input = numbers[0].split(',').map(o => Number(o))
   const task1 = await timeFunction(() => partOne(input))
   const task2 = await timeFunction(() => partTwo(input))
-  console.log([{ ans: task1.result, ms: task1.ms }, { ans: task2.result, ms: task2.ms }])
+  console.log(JSON.stringify([{ ans: task1.result, ms: task1.ms }, { ans: task2.result, ms: task2.ms }]))
 }
 
 module.exports = start
